@@ -27,7 +27,7 @@ public class Seat {
     private String rowLabel;
 
     @Column(name = "seat_number")
-    private Integer seatNumber;
+    private String seatNumber;
 
     @Enumerated(EnumType.STRING)
     private SeatStatus status;
@@ -48,7 +48,7 @@ public class Seat {
         return rowLabel;
     }
 
-    public Integer getSeatNumber() {
+    public String getSeatNumber() {
         return seatNumber;
     }
 
