@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Control Panel</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css">
+</head>
+<body>
+    <div class="page-container">
+        <section class="dashboard-hero">
+            <div>
+                <h1>Admin Control Panel</h1>
+                <p>Welcome back, <strong th:text="${userFullName}">Administrator</strong>. Monitor events, manage seat inventory, and track sales performance.</p>
+            </div>
+        </section>
+
+        <section class="dashboard-summary">
+            <div class="summary-card">
+                <h2>Active Events</h2>
+                <p th:text="${concertCount}">0</p>
+            </div>
+            <div class="summary-card">
+                <h2>Available Seats</h2>
+                <p th:text="${availableSeatCount}">0</p>
+            </div>
+        </section>
+
+        <section class="dashboard-card">
+            <h2>📊 Dashboard Overview</h2>
+            <p>This control panel provides real-time insights into your concert booking system. Use the quick actions below to navigate or manage your events through direct database access.</p>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px;">
+                <a class="dashboard-cta" href="/">View Main Page</a>
+                <a class="dashboard-cta" href="/tickets">Check Tickets</a>
+            </div>
+        </section>
+
+        <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(0,0,0,0.1); text-align: center;">
+            <a href="/logout" style="color: #e94560; font-weight: 700; text-decoration: none; font-size: 16px;">Sign out from Admin Panel</a>
+        </div>
+    </div>
+</body>
+</html>

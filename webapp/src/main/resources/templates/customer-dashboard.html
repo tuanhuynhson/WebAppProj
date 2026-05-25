@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css">
+</head>
+<body>
+    <div class="page-container">
+        <section class="dashboard-hero">
+            <div>
+                <h1>Your Concert Dashboard</h1>
+            </div>
+        </section>
+
+        <section class="dashboard-summary">
+            <div class="summary-card">
+                <h2>Seats Remaining</h2>
+                <p th:text="${availableSeatCount}">0</p>
+            </div>
+        </section>
+
+        <div class="concert-list" th:if="${!#lists.isEmpty(upcomingLocations)}" style="margin-top: 30px;">
+            <article class="concert-card" th:each="location : ${upcomingLocations}">
+                <h3 th:text="${location.city}">City</h3>
+                <div>
+                    <p>
+                        <strong>Venue:</strong>
+                        <span th:text="${location.venueName}">Venue Name</span>
+                    </p>
+                    <p>
+                        <strong>When:</strong>
+                        <span th:text="${location.concertDate}">Date & Time</span>
+                    </p>
+                    <p>
+                        <span style="display: inline-block; padding: 6px 12px; background: rgba(255, 74, 10, 0.1); border-radius: 8px; font-weight: 600; color: var(--orange);">
+                            <span th:text="${location.availableSeats}">0</span> seats
+                        </span>
+                    </p>
+                </div>
+            </article>
+        </div>
+
+        <section class="dashboard-card" th:if="${#lists.isEmpty(upcomingLocations)}">
+            <p>No upcoming concerts at this time. Check back soon for new events!</p>
+        </section>
+
+        <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 40px;">
+            <a class="dashboard-cta" href="/">Browse All Events</a>
+            <a class="dashboard-cta" href="/tickets">View Ticket Details</a>
+        </div>
+
+        <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(0,0,0,0.1); text-align: center;">
+            <a href="/logout" style="color: #e94560; font-weight: 700; text-decoration: none; font-size: 16px;">Sign out from Your Account</a>
+        </div>
+    </div>
+</body>
+</html>

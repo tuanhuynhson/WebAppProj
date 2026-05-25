@@ -12,7 +12,10 @@
 <body>
     <header class="concert-header" aria-label="The Great Returnal concert header">
         <nav class="header-nav" aria-label="Primary navigation">
-            <a href="/login">Log in / Register</a>
+            <a th:if="${session.currentUserRole == null}" href="/login">Log in / Register</a>
+            <a th:if="${session.currentUserRole == T(com.example.webapp.model.UserRole).ADMIN}" href="/admin">Admin Dashboard</a>
+            <a th:if="${session.currentUserRole == T(com.example.webapp.model.UserRole).CUSTOMER}" href="/dashboard">My Dashboard</a>
+            <a th:if="${session.currentUserRole != null}" href="/logout">Logout</a>
             <a href="/merch">Merch</a>
         </nav>
 
