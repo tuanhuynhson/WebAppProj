@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merch</title>
+    <link rel="stylesheet" th:href="@{/css/merch.css}">
+</head>
+<body>
+
+    <header class="merch-header">
+        <a th:href="@{/}" class="back-link">&larr; Back to Home</a>
+    </header>
+
+    <div class="merch-container">
+        <h2>Official Tour Merchandise</h2>
+        <p class="subtitle">Grab your exclusive The Great Returnal gear before they sell out!</p>
+
+        <div class="merch-grid">
+            <div class="merch-card">
+                <div class="merch-image">👕</div>
+                <h3>Tour T-Shirt</h3>
+                <p class="price">$35.00</p>
+                <button class="btn-buy">Add to Cart</button>
+            </div>
+            
+            <div class="merch-card">
+                <div class="merch-image">🔦</div>
+                <h3>Official Lightstick</h3>
+                <p class="price">$50.00</p>
+                <button class="btn-buy">Add to Cart</button>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-image">🖼️</div>
+                <h3>Signed Poster</h3>
+                <p class="price">$20.00</p>
+                <button class="btn-buy">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
