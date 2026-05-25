@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f7f6;
@@ -5,14 +9,16 @@ body {
     padding: 0;
 }
 
-/* Đổi nền thanh header sang màu cam */
+/* --- THANH HEADER (Cam) --- */
 .merch-header {
     padding: 20px 40px;
     background-color: #ff3300; 
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between; /* Đẩy nút Back và Cart ra 2 bên */
+    align-items: center;
 }
 
-/* Chữ mặc định màu trắng */
 .back-link {
     color: #ffffff; 
     text-decoration: none;
@@ -21,12 +27,41 @@ body {
     transition: color 0.3s ease; 
 }
 
-/* Đổi thành màu đen khi di chuột vào, bỏ gạch chân */
 .back-link:hover {
     color: #000000; 
-    text-decoration: none; 
 }
 
+/* --- ICON GIỎ HÀNG TRÊN HEADER --- */
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.cart-icon:hover {
+    color: #000000;
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    background: #e94560;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* --- PHẦN NỘI DUNG CHÍNH --- */
 .merch-container {
     max-width: 1000px;
     margin: 40px auto;
@@ -47,12 +82,13 @@ h2 {
     margin-bottom: 40px;
 }
 
-/* Hiển thị dạng lưới cho các món đồ */
+/* --- LƯỚI SẢN PHẨM --- */
 .merch-grid {
     display: flex;
     gap: 30px;
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 40px;
 }
 
 .merch-card {
@@ -66,10 +102,9 @@ h2 {
 }
 
 .merch-card:hover {
-    transform: translateY(-10px); /* Hiệu ứng nảy lên khi di chuột */
+    transform: translateY(-5px);
 }
 
-/* Khung giả định cho hình ảnh */
 .merch-image {
     background-color: #f0f0f5;
     height: 200px;
@@ -109,4 +144,78 @@ h2 {
 
 .btn-buy:hover {
     background-color: #e94560;
+}
+
+/* --- KHU VỰC THANH TOÁN (CART SECTION) --- */
+.cart-section {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.cart-section h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info {
+    font-size: 16px;
+    color: #1a1a2e;
+}
+
+.quantity-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #d1d1e0;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #1a1a2e;
+    transition: all 0.2s;
+}
+
+.quantity-controls button:hover {
+    background: #f0f0f5;
+}
+
+.btn-remove {
+    background: #e94560 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0 10px !important;
+    width: auto !important;
+}
+
+.btn-remove:hover {
+    background: #d13d56 !important;
+}
+
+.cart-total {
+    text-align: right;
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 20px;
+    color: #1a1a2e;
+    margin-top: 10px;
+}
+
+.cart-total span {
+    color: #e94560;
 }
