@@ -1,11 +1,6 @@
 package com.example.webapp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -65,5 +60,35 @@ public class ConcertLocation {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    // SETTERS
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setVenueName(String venueName) {
+        this.venueName = venueName;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setConcertDate(LocalDateTime concertDate) {
+        this.concertDate = concertDate;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

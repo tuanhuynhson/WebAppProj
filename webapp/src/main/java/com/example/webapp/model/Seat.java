@@ -1,13 +1,6 @@
 package com.example.webapp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "seats")
@@ -54,5 +47,27 @@ public class Seat {
 
     public SeatStatus getStatus() {
         return status;
+    }
+
+    // SETTERS
+
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public void setRowLabel(String rowLabel) {
+        this.rowLabel = rowLabel;
+    }
+
+    public void setSeatNumber(String seatNumber) {
+        this.seatNumber = seatNumber;
+    }
+
+    public void setStatus(SeatStatus status) {
+        this.status = status;
     }
 }
