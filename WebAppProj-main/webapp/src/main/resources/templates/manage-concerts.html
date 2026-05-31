@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Concerts</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/home.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <h1>Manage Concerts</h1>
+
+    <section class="dashboard-card">
+
+        <h2>Add Concert</h2>
+
+        <form action="/admin/concerts/add"
+              method="post">
+
+            <input type="text"
+                   name="city"
+                   placeholder="City"
+                   required>
+
+            <input type="text"
+                   name="venueName"
+                   placeholder="Venue Name"
+                   required>
+
+            <input type="text"
+                   name="country"
+                   placeholder="Country"
+                   required>
+
+            <input type="text"
+                   name="address"
+                   placeholder="Address"
+                   required>
+
+            <textarea
+                name="description"
+                placeholder="Description">
+            </textarea>
+
+            <br><br>
+
+            <button type="submit">
+                Add Concert
+            </button>
+
+        </form>
+
+    </section>
+
+    <section class="dashboard-card">
+
+        <h2>Concert List</h2>
+
+        <table border="1"
+               width="100%"
+               cellpadding="10">
+
+            <tr>
+                <th>ID</th>
+                <th>City</th>
+                <th>Venue</th>
+                <th>Country</th>
+                <th>Action</th>
+            </tr>
+
+            <tr th:each="concert : ${concerts}">
+
+                <td th:text="${concert.id}">
+                    1
+                </td>
+
+                <td th:text="${concert.city}">
+                    City
+                </td>
+
+                <td th:text="${concert.venueName}">
+                    Venue
+                </td>
+
+                <td th:text="${concert.country}">
+                    Country
+                </td>
+
+                <td>
+
+                    <form
+                        action="/admin/concerts/delete"
+                        method="post">
+
+                        <input
+                            type="hidden"
+                            name="id"
+                            th:value="${concert.id}">
+
+                        <button type="submit">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </section>
+
+    <br>
+
+    <a href="/admin">
+        ← Back Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>
