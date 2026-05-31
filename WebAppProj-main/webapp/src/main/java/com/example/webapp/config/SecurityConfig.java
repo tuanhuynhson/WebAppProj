@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/tickets",
                                 "/merch",
+                                "/merch/payment",
                                 "/error"
                         ).permitAll()
                         .anyRequest().permitAll()
