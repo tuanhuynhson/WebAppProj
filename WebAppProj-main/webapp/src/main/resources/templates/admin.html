@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet"
+          th:href="@{/css/home.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <section class="dashboard-hero">
+        <div>
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Welcome back,
+                <strong
+                    th:text="${userFullName}">
+                    Admin
+                </strong>
+            </p>
+        </div>
+    </section>
+
+    <section class="dashboard-summary">
+
+        <div class="summary-card">
+            <h2>Total Concerts</h2>
+            <p th:text="${concertCount}">
+                0
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <h2>Available Seats</h2>
+            <p th:text="${availableSeatCount}">
+                0
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <h2>Booked Seats</h2>
+            <p th:text="${bookedSeatCount}">
+                0
+            </p>
+        </div>
+
+        <div class="summary-card">
+            <h2>Held Seats</h2>
+            <p th:text="${heldSeatCount}">
+                0
+            </p>
+        </div>
+
+    </section>
+
+    <section class="dashboard-card">
+
+        <h2>Admin Tools</h2>
+
+        <div style="
+            display:flex;
+            gap:20px;
+            margin-top:25px;
+            flex-wrap:wrap;">
+
+            <a class="dashboard-cta"
+               href="/admin/concerts">
+                Manage Concerts
+            </a>
+
+            <a class="dashboard-cta"
+               href="/admin/seats">
+                Manage Seats
+            </a>
+
+            <a class="dashboard-cta"
+               href="/">
+                Homepage
+            </a>
+
+        </div>
+
+    </section>
+
+    <div style="
+        text-align:center;
+        margin-top:40px;">
+
+        <a href="/logout"
+           style="
+            color:red;
+            font-weight:bold;">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.auth-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-box h2 {
+    text-align: center;
+    color: #1a1a2e;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.auth-box p {
+    text-align: center;
+    color: #7a7a9d;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #1a1a2e;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d1e0;
+    border-radius: 6px;
+    box-sizing: border-box; /* Đảm bảo padding không làm tràn width */
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #e94560;
+    outline: none;
+}
+
+/* Nút đăng nhập màu đỏ */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background-color: #e94560;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #d13d56;
+}
+
+/* Đường gạch ngang chữ Or */
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    color: #a0a0b8;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 42%;
+    height: 1px;
+    background-color: #d1d1e0;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+
+
+.btn-facebook:hover {
+    background-color: #155dbf;
+}
+
+
+.auth-box > p:last-child {
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.auth-box > p:last-child a {
+    color: #e94560;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-box > p:last-child a:hover {
+    text-decoration: underline;
+}
