@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Payment | The Great Returnal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&family=Libre+Caslon+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css" />
+</head>
+<body class="ticket-page">
+    <main class="ticket-shell ticket-payment-shell" aria-label="Ticket payment">
+        <a class="ticket-home-link" th:href="@{/tickets(locationId=${location.id})}" href="/tickets">&lt; Back to Tickets</a>
+
+        <section class="ticket-hero ticket-payment-hero" aria-label="Payment summary">
+            <div>
+                <p class="ticket-kicker">The Great Returnal</p>
+                <h1>Payment</h1>
+            </div>
+            <article class="ticket-show-card">
+                <h2 th:text="${location.city}">Canada</h2>
+                <p th:text="${location.venueName}">Venue</p>
+                <p th:text="${location.concertDate}">Aug 14, 2026 - 19:30</p>
+                <strong>
+                    <span th:text="${payment.totalQuantity}">0</span>
+                    <span th:text="${payment.totalQuantity == 1 ? ' ticket' : ' tickets'}"> tickets</span>
+                </strong>
+            </article>
+        </section>
+
+        <section class="ticket-payment-grid">
+            <article class="ticket-order-panel" aria-label="Selected ticket order">
+                <div class="ticket-order-heading">
+                    <h2>YOUR TICKET</h2>
+                    <strong th:text="${payment.total}">$0.00</strong>
+                </div>
+
+                <div
+                    th:if="${paymentMessage != null}"
+                    class="ticket-payment-alert"
+                    th:classappend="${paymentStatus == 'error'} ? ' ticket-payment-alert-error' : ' ticket-payment-alert-success'"
+                    th:text="${paymentMessage}"
+                >
+                    Payment message
+                </div>
+
+                <div class="ticket-order-items">
+                    <div class="ticket-order-item" th:each="item : ${payment.items}">
+                        <div>
+                            <strong>
+                                <span th:text="${item.code}">A1</span>
+                                <span> | </span>
+                                <span th:text="${item.ticketType}">V.I.P</span>
+                            </strong>
+                            <p th:text="${item.seatLocation}">Front Left</p>
+                        </div>
+                        <div>
+                            <span th:text="${item.quantity + ' x ' + item.unitPrice}">1 x $220.00</span>
+                            <strong th:text="${item.lineTotal}">$220.00</strong>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <form class="ticket-payment-form" method="post" th:action="@{/tickets/checkout}" action="/tickets/checkout">
+                <input type="hidden" name="locationId" th:value="${location.id}" />
+                <input type="hidden" name="selections" th:value="${selections}" />
+
+                <label>
+                    Name
+                    <input type="text" name="customerName" th:value="${session.currentUserFullName}" autocomplete="name" />
+                </label>
+
+                <fieldset>
+                    <legend>Payment Method</legend>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="Credit Card" checked />
+                        Credit Card
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="MoMo Wallet" />
+                        MoMo Wallet
+                    </label>
+                    <label>
+                        <input type="radio" name="paymentMethod" value="Cash at Venue" />
+                        Cash at Venue
+                    </label>
+                </fieldset>
+
+                <button class="ticket-action" type="submit">Complete Payment</button>
+                <p>Demo payment only. Completing this will reserve available seats to your account.</p>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

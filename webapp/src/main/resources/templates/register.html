@@ -1,64 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link rel="stylesheet" th:href="@{/css/register.css}" href="/css/register.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/register.css}" href="/css/register.css" />
 </head>
-<body>
-    <div class="auth-container">
-        <div class="auth-box">
-            <h2>Create a New Account</h2>
-            <p>Fill in the information below to become a member.</p>
-            <p id="error-message" style="color: red; text-align: center; display: none; font-weight: bold; margin-top: 20px;"></p>
-            
-            <form id="registerForm" action="/register" method="post">
-                <div class="form-group">
-                    <label for="fullname">Full Name</label>
-                    <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
-                </div>
+<body class="login-page register-page">
+    <main class="login-stage" aria-label="Register">
+        <section class="login-orbit">
+            <form class="login-form" action="/register" method="post">
+                <a class="login-home-link" th:href="@{/}" href="/">&lt; Return to Home</a>
+                <h1>REGISTER</h1>
+                <p id="error-message" class="login-error" hidden></p>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Create a password" required minlength="6">
-                </div>
+                <label class="visually-hidden" for="fullname">Full Name</label>
+                <input id="fullname" name="fullname" type="text" placeholder="FULL NAME" required autocomplete="name" />
 
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter your password" required minlength="6">
-                </div>
-                
-                <button type="submit" class="btn-submit">Register Account</button>
+                <label class="visually-hidden" for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="EMAIL" required autocomplete="email" />
+
+                <label class="visually-hidden" for="password">Password</label>
+                <input id="password" name="password" type="password" placeholder="PASSWORD" required minlength="6" autocomplete="new-password" />
+
+                <label class="visually-hidden" for="confirm_password">Confirm Password</label>
+                <input id="confirm_password" name="confirm_password" type="password" placeholder="CONFIRM" required minlength="6" autocomplete="new-password" />
+
+                <p class="login-register">Already have an account? <a th:href="@{/login}" href="/login">Login instead</a></p>
+                <button type="submit">REGISTER</button>
             </form>
+        </section>
+    </main>
 
-
-            <p style="margin-top: 25px; font-size: 0.95rem; color: #666;">
-                Already have an account? 
-                <a href="/login" style="color: #e94560; font-weight: bold;">Login here</a>
-            </p>
-                <p style="margin-top: 25px; font-size: 0.95rem; color: #666;">
-                Already have an account? 
-                <a href="/login" style="color: #e94560; font-weight: bold;">Login here</a>
-            </p>
-        </div>
-    </div>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const errorType = urlParams.get('error');
-        const errorMsgElement = document.getElementById('error-message');
+        const errorType = urlParams.get("error");
+        const errorMsgElement = document.getElementById("error-message");
 
-        if (errorType === 'password_mismatch') {
+        if (errorType === "password_mismatch") {
             errorMsgElement.innerText = "Passwords do not match.";
-            errorMsgElement.style.display = "block";
-        } else if (errorType === 'email_exists') {
+            errorMsgElement.hidden = false;
+        } else if (errorType === "email_exists") {
             errorMsgElement.innerText = "Email already exists. Please use another address.";
-            errorMsgElement.style.display = "block";
+            errorMsgElement.hidden = false;
         }
     </script>
 </body>

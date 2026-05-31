@@ -37,7 +37,7 @@ public class AdminController {
         return role == UserRole.ADMIN;
     }
 
-    @GetMapping
+    @GetMapping({"", "/dashboard"})
     public String adminDashboard(
             HttpSession session,
             Model model
@@ -61,21 +61,21 @@ public class AdminController {
 
         model.addAttribute(
                 "availableSeatCount",
-                seatDao.countByStatus(
+                seatDao.countValidByStatus(
                         SeatStatus.AVAILABLE
                 )
         );
 
         model.addAttribute(
                 "bookedSeatCount",
-                seatDao.countByStatus(
+                seatDao.countValidByStatus(
                         SeatStatus.BOOKED
                 )
         );
 
         model.addAttribute(
                 "heldSeatCount",
-                seatDao.countByStatus(
+                seatDao.countValidByStatus(
                         SeatStatus.HELD
                 )
         );

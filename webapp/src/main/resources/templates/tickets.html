@@ -1,38 +1,236 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tickets</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tickets | The Great Returnal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&family=Libre+Caslon+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css" />
 </head>
-<body>
-    <div class="page-container">
-        <section class="dashboard-hero">
+<body class="ticket-page">
+    <main class="ticket-shell" aria-label="Ticket selection">
+        <a class="ticket-home-link" th:href="@{/}" href="/">&lt; Return to Home</a>
+
+        <section class="ticket-hero" aria-label="Selected concert">
             <div>
-                <h1>Ticket Center</h1>
+                <p class="ticket-kicker">The Great Returnal</p>
+                <h1>Ticket Selection</h1>
             </div>
-        </section>
-
-        <section class="concert-list">
-            <div th:if="${#lists.isEmpty(locations)}" class="dashboard-card">
-                <h2>No concerts available</h2>
-                <p>There are no concerts at the moment. Please check back after the admin updates.</p>
-            </div>
-
-            <article th:each="location : ${locations}" class="concert-card">
-                <h3 th:text="${location.city}">City</h3>
-                <p><strong>Venue:</strong> <span th:text="${location.venueName}">Venue name</span></p>
+            <article class="ticket-show-card" th:if="${location != null}">
+                <h2 th:text="${location.city}">Canada</h2>
+                <p th:text="${location.venueName}">Venue</p>
                 <p>
-                    <strong>Date:</strong>
-                    <span th:text="${location.concertDate != null} ? ${#temporals.format(location.concertDate, 'MMM d, yyyy - HH:mm')} : 'Date to be announced'">Date</span>
+                    <span th:text="${location.concertDate}">Aug 14, 2026 - 19:30</span>
+                    <span th:if="${location.address != null and !location.address.isBlank()}">
+                        , <span th:text="${location.address}">Address</span>
+                    </span>
                 </p>
-                <p><strong>Details:</strong> <span th:text="${location.description}">Description</span></p>
-                <p><a th:href="@{/dashboard}">Back to dashboard</a></p>
+                <strong>
+                    <span th:text="${availableSeats}">0</span>
+                    <span> seats available</span>
+                </strong>
+            </article>
+            <article class="ticket-show-card" th:if="${location == null}">
+                <h2>No show selected</h2>
+                <p>Choose a concert from the homepage ticket list.</p>
             </article>
         </section>
 
-        <p style="margin-top: 24px;"><a href="/">Return home</a></p>
-    </div>
+        <section class="seat-selection" aria-label="Seat section selector">
+            <div class="seat-map-wrap">
+                <div class="stage-marker">STAGE</div>
+                <div class="seat-grid" role="group" aria-label="Available ticket sections">
+                    <button
+                        type="button"
+                        th:each="section : ${sections}"
+                        class="seat-zone"
+                        th:classappend="' seat-zone-' + ${section.modifier}"
+                        th:style="'grid-row: ' + ${section.gridRow} + ' / span ' + ${section.rowSpan} + '; grid-column: ' + ${section.gridColumn} + ' / span ' + ${section.columnSpan}"
+                        th:attr="data-section-id=${section.code},data-section-db-id=${section.id},data-ticket-type=${section.ticketType},data-price=${section.price},data-price-amount=${section.priceAmount},data-seat-location=${section.seatLocation},data-availability=${section.availabilityLabel},data-available-count=${section.availableSeats},aria-label=${section.ticketType + ' section ' + section.code + ', ' + section.price + ', ' + section.seatLocation}"
+                    >
+                        <span class="zone-id" th:text="${section.code}">B2</span>
+                        <span class="zone-count" hidden>0</span>
+                        <span class="zone-type" th:text="${section.ticketType}">STANDING</span>
+                        <span class="zone-price" th:text="${section.price}">$180</span>
+                    </button>
+                </div>
+                <div class="entrance-marker">ENTRANCE</div>
+                <div class="seat-layout-empty" th:if="${#lists.isEmpty(sections)}">
+                    No seat layout has been configured for this concert yet.
+                </div>
+            </div>
+
+            <aside class="ticket-summary" aria-live="polite" th:if="${selectedSection != null}">
+                <p>Selected Section</p>
+                <h2 id="selectedSectionId" th:text="${selectedSection.code}">B2</h2>
+                <dl>
+                    <div>
+                        <dt>Ticket Type</dt>
+                        <dd id="selectedTicketType" th:text="${selectedSection.ticketType}">STANDING</dd>
+                    </div>
+                    <div>
+                        <dt>Pricing</dt>
+                        <dd id="selectedPrice" th:text="${selectedSection.price}">$180</dd>
+                    </div>
+                    <div>
+                        <dt>Seat Location</dt>
+                        <dd id="selectedSeatLocation" th:text="${selectedSection.seatLocation}">Center Floor</dd>
+                    </div>
+                    <div>
+                        <dt>Section Detail</dt>
+                        <dd id="selectedAvailability" th:text="${selectedSection.availabilityLabel}">Open standing</dd>
+                    </div>
+                </dl>
+                <button class="ticket-action" id="addTicketButton" type="button">Select Section</button>
+
+                <form class="ticket-selection-form" method="post" th:action="@{/tickets/payment}" action="/tickets/payment">
+                    <input type="hidden" name="locationId" th:value="${location == null ? '' : location.id}" />
+                    <input type="hidden" name="selections" id="ticketSelections" />
+                    <div class="ticket-selection-indicator" aria-live="polite">
+                        <p>Chosen Tickets</p>
+                        <div class="ticket-selection-empty" id="ticketSelectionEmpty">No tickets selected.</div>
+                        <div class="ticket-selection-list" id="ticketSelectionList"></div>
+                        <div class="ticket-selection-total">
+                            <span id="ticketQuantityTotal">0 tickets</span>
+                            <strong id="ticketPriceTotal">$0.00</strong>
+                        </div>
+                    </div>
+                    <button class="ticket-action ticket-payment-action" id="ticketPaymentButton" type="submit" disabled>
+                        Continue to Payment
+                    </button>
+                </form>
+            </aside>
+        </section>
+    </main>
+
+    <script>
+        const zones = document.querySelectorAll(".seat-zone");
+        const selectedSectionId = document.querySelector("#selectedSectionId");
+        const selectedTicketType = document.querySelector("#selectedTicketType");
+        const selectedPrice = document.querySelector("#selectedPrice");
+        const selectedSeatLocation = document.querySelector("#selectedSeatLocation");
+        const selectedAvailability = document.querySelector("#selectedAvailability");
+        const addTicketButton = document.querySelector("#addTicketButton");
+        const ticketSelectionsInput = document.querySelector("#ticketSelections");
+        const ticketSelectionList = document.querySelector("#ticketSelectionList");
+        const ticketSelectionEmpty = document.querySelector("#ticketSelectionEmpty");
+        const ticketQuantityTotal = document.querySelector("#ticketQuantityTotal");
+        const ticketPriceTotal = document.querySelector("#ticketPriceTotal");
+        const ticketPaymentButton = document.querySelector("#ticketPaymentButton");
+        let activeZone = null;
+        const selectedTickets = new Map();
+        const initialZone = selectedSectionId
+            ? Array.from(zones).find((zone) => zone.dataset.sectionId === selectedSectionId.textContent.trim())
+            : null;
+
+        if (initialZone) {
+            initialZone.classList.add("is-selected");
+            activeZone = initialZone;
+        }
+
+        zones.forEach((zone) => {
+            zone.addEventListener("click", () => {
+                if (!selectedSectionId) {
+                    return;
+                }
+
+                zones.forEach((item) => item.classList.remove("is-selected"));
+                zone.classList.add("is-selected");
+                activeZone = zone;
+                selectedSectionId.textContent = zone.dataset.sectionId;
+                selectedTicketType.textContent = zone.dataset.ticketType;
+                selectedPrice.textContent = zone.dataset.price;
+                selectedSeatLocation.textContent = zone.dataset.seatLocation;
+                selectedAvailability.textContent = zone.dataset.availability;
+            });
+        });
+
+        addTicketButton?.addEventListener("click", () => {
+            if (!activeZone) {
+                return;
+            }
+
+            const dbId = activeZone.dataset.sectionDbId;
+            const availableCount = Number(activeZone.dataset.availableCount || 0);
+            const current = selectedTickets.get(dbId)?.quantity || 0;
+            if (availableCount > 0 && current >= availableCount) {
+                return;
+            }
+
+            selectedTickets.set(dbId, {
+                dbId,
+                code: activeZone.dataset.sectionId,
+                type: activeZone.dataset.ticketType,
+                price: activeZone.dataset.price,
+                priceAmount: Number(activeZone.dataset.priceAmount || 0),
+                quantity: current + 1,
+            });
+            renderTicketIndicator();
+        });
+
+        function renderTicketIndicator() {
+            let quantityTotal = 0;
+            let priceTotal = 0;
+            const payload = [];
+            ticketSelectionList.innerHTML = "";
+
+            zones.forEach((zone) => {
+                const selected = selectedTickets.get(zone.dataset.sectionDbId);
+                const count = zone.querySelector(".zone-count");
+                if (!count) {
+                    return;
+                }
+                count.textContent = selected ? selected.quantity : "0";
+                count.hidden = !selected;
+            });
+
+            selectedTickets.forEach((ticket) => {
+                quantityTotal += ticket.quantity;
+                priceTotal += ticket.priceAmount * ticket.quantity;
+                payload.push(`${ticket.dbId}:${ticket.quantity}`);
+
+                const row = document.createElement("div");
+                row.className = "ticket-selection-row";
+                row.innerHTML = `
+                    <span>${ticket.code} ${ticket.type}</span>
+                    <strong>${ticket.quantity} x ${ticket.price}</strong>
+                    <button type="button" data-remove-section="${ticket.dbId}" aria-label="Remove one ${ticket.code} ticket">-</button>
+                `;
+                ticketSelectionList.appendChild(row);
+            });
+
+            ticketSelectionsInput.value = payload.join(",");
+            ticketSelectionEmpty.hidden = selectedTickets.size > 0;
+            ticketQuantityTotal.textContent = `${quantityTotal} ${quantityTotal === 1 ? "ticket" : "tickets"}`;
+            ticketPriceTotal.textContent = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+            }).format(priceTotal);
+            ticketPaymentButton.disabled = selectedTickets.size === 0;
+        }
+
+        ticketSelectionList?.addEventListener("click", (event) => {
+            const button = event.target.closest("[data-remove-section]");
+            if (!button) {
+                return;
+            }
+
+            const dbId = button.dataset.removeSection;
+            const ticket = selectedTickets.get(dbId);
+            if (!ticket) {
+                return;
+            }
+
+            if (ticket.quantity <= 1) {
+                selectedTickets.delete(dbId);
+            } else {
+                ticket.quantity -= 1;
+                selectedTickets.set(dbId, ticket);
+            }
+            renderTicketIndicator();
+        });
+    </script>
 </body>
 </html>

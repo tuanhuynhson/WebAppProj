@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css" />
+</head>
+<body class="dashboard-page admin-dashboard">
+<nav class="dashboard-nav" aria-label="Admin navigation">
+    <a th:href="@{/}" href="/">The Great Returnal</a>
+    <div>
+        <span th:text="'Admin: ' + ${currentUser}">Admin</span>
+        <a th:href="@{/logout}" href="/logout">Log out</a>
+    </div>
+</nav>
+
+<main class="dashboard-shell">
+    <header class="dashboard-heading">
+        <span class="hero-badge">Administration</span>
+        <h1>Concert operations</h1>
+        <p>Monitor show inventory, bookings and customer access from one control panel.</p>
+    </header>
+
+    <section class="metric-grid" aria-label="Administration overview">
+        <article class="metric-card">
+            <span>Shows</span>
+            <strong th:text="${showCount}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Total seats</span>
+            <strong th:text="${seatCount}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Available</span>
+            <strong th:text="${availableSeatCount}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Booked</span>
+            <strong th:text="${bookedSeatCount}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Customers</span>
+            <strong th:text="${customerCount}">0</strong>
+        </article>
+    </section>
+
+    <section class="dashboard-list admin-inventory" aria-label="Concert inventory">
+        <div class="section-heading">
+            <h2>Seat inventory by show</h2>
+            <a th:href="@{/}" href="/">Open public page</a>
+        </div>
+        <article class="show-row" th:each="location : ${locations}">
+            <div>
+                <h3 th:text="${location.city}">City</h3>
+                <p th:text="${location.venueName} + ' | ' + ${location.concertDate}">Venue | Date</p>
+            </div>
+            <strong th:text="${location.availableSeats} + ' available'">0 available</strong>
+        </article>
+        <p class="dashboard-empty" th:if="${#lists.isEmpty(locations)}">No concert locations available for management.</p>
+    </section>
+</main>
+</body>
+</html>

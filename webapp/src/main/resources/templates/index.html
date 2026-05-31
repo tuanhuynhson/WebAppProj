@@ -12,11 +12,15 @@
 <body>
     <header class="concert-header" aria-label="The Great Returnal concert header">
         <nav class="header-nav" aria-label="Primary navigation">
-            <a th:if="${session.currentUserRole == null}" href="/login">Log in / Register</a>
-            <a th:if="${session.currentUserRole == T(com.example.webapp.model.UserRole).ADMIN}" href="/admin">Admin Dashboard</a>
-            <a th:if="${session.currentUserRole == T(com.example.webapp.model.UserRole).CUSTOMER}" href="/dashboard">My Dashboard</a>
-            <a th:if="${session.currentUserRole != null}" href="/logout">Logout</a>
-            <a href="/merch">Merch</a>
+            <span class="header-nav-group header-nav-primary">
+                <a th:if="${session.currentUserRole == null}" href="/login">Log in / Register</a>
+                <a th:if="${session.currentUserRole == T(com.example.webapp.model.UserRole).ADMIN}" href="/admin">Admin Dashboard</a>
+                <a th:if="${session.currentUserRole == T(com.example.webapp.model.UserRole).CUSTOMER}" href="/dashboard">My Dashboard</a>
+            </span>
+            <span class="header-nav-group header-nav-secondary">
+                <a href="/merch">Merch</a>
+                <a th:if="${session.currentUserRole != null}" href="/logout">Logout</a>
+            </span>
         </nav>
 
         <div class="oval-stage" aria-hidden="true">
@@ -25,7 +29,7 @@
             <div class="orange-oval"></div>
         </div>
 
-        <a class="ticket-link" href="/tickets">Ticket</a>
+        <span class="ticket-link">Ticket</span>
 
         <div class="brand-mark">
             <p class="barcode barcode-wide">THE GREAT RETURNAL</p>

@@ -1,59 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Customer Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&family=Libre+Caslon+Display&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="/css/home.css" />
 </head>
-<body>
-    <div class="page-container">
-        <section class="dashboard-hero">
-            <div>
-                <h1>Your Concert Dashboard</h1>
+<body class="customer-dashboard-page">
+    <main class="customer-dashboard-shell" aria-label="Customer dashboard">
+        <section class="customer-oval-hero" aria-label="Customer greeting">
+            <div class="customer-oval-content">
+                <p>Hello,</p>
+                <h1 th:text="${userFullName}">Customer</h1>
             </div>
         </section>
 
-        <section class="dashboard-summary">
-            <div class="summary-card">
-                <h2>Seats Remaining</h2>
-                <p th:text="${availableSeatCount}">0</p>
-            </div>
-        </section>
+        <section class="dashboard-lists" aria-label="Customer activity">
+            <article class="dashboard-list-panel dashboard-ticket-panel">
+                <div class="dashboard-list-heading">
+                    <h2>MY TICKET</h2>
+                    <a th:href="@{/}" href="/">Buy Ticket</a>
+                </div>
 
-        <div class="concert-list" th:if="${!#lists.isEmpty(upcomingLocations)}" style="margin-top: 30px;">
-            <article class="concert-card" th:each="location : ${upcomingLocations}">
-                <h3 th:text="${location.city}">City</h3>
-                <div>
-                    <p>
-                        <strong>Venue:</strong>
-                        <span th:text="${location.venueName}">Venue Name</span>
-                    </p>
-                    <p>
-                        <strong>When:</strong>
-                        <span th:text="${location.concertDate}">Date & Time</span>
-                    </p>
-                    <p>
-                        <span style="display: inline-block; padding: 6px 12px; background: rgba(255, 74, 10, 0.1); border-radius: 8px; font-weight: 600; color: var(--orange);">
-                            <span th:text="${location.availableSeats}">0</span> seats
-                        </span>
-                    </p>
+                <div class="dashboard-items" th:if="${!#lists.isEmpty(ownedTickets)}">
+                    <div class="dashboard-item" th:each="ticket : ${ownedTickets}">
+                        <div>
+                            <strong th:text="${ticket.city}">City</strong>
+                            <p>
+                                <span th:text="${ticket.venueName}">Venue</span>
+                                <span> | </span>
+                                <span th:text="${ticket.concertDate}">Date</span>
+                            </p>
+                        </div>
+                        <span class="dashboard-pill" th:text="${ticket.seatLabel}">Seat A1</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-empty" th:if="${#lists.isEmpty(ownedTickets)}">
+                    <p>No tickets yet.</p>
                 </div>
             </article>
-        </div>
 
-        <section class="dashboard-card" th:if="${#lists.isEmpty(upcomingLocations)}">
-            <p>No upcoming concerts at this time. Check back soon for new events!</p>
+            <article class="dashboard-list-panel dashboard-merch-panel">
+                <div class="dashboard-list-heading">
+                    <h2>MY MERCH</h2>
+                    <a th:href="@{/merch}" href="/merch">Shop Merch</a>
+                </div>
+
+                <div class="dashboard-items" th:if="${!#lists.isEmpty(ownedMerch)}">
+                    <div class="dashboard-item" th:each="order : ${ownedMerch}">
+                        <div>
+                            <strong th:text="${order.summary}">Merch order</strong>
+                            <p th:text="${order.total}">$0.00</p>
+                        </div>
+                        <span class="dashboard-pill" th:text="${order.status}">Paid</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-empty" th:if="${#lists.isEmpty(ownedMerch)}">
+                    <p>No merch yet.</p>
+                </div>
+            </article>
         </section>
 
-        <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 40px;">
-            <a class="dashboard-cta" href="/">Browse All Events</a>
-            <a class="dashboard-cta" href="/tickets">View Ticket Details</a>
-        </div>
-
-        <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(0,0,0,0.1); text-align: center;">
-            <a href="/logout" style="color: #e94560; font-weight: 700; text-decoration: none; font-size: 16px;">Sign out from Your Account</a>
-        </div>
-    </div>
+        <a class="dashboard-signout" th:href="@{/logout}" href="/logout">Sign out</a>
+    </main>
 </body>
 </html>

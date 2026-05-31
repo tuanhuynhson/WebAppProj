@@ -1,27 +1,23 @@
 package com.example.webapp;
 
+import com.example.webapp.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class WebappApplication {
 //http://localhost:8080/
-	public static void main(String[] args) {
-		SpringApplication.run(WebappApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WebappApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner printAdminHash(PasswordEncoder passwordEncoder) {
-		return args -> {
-			String adminPassword = "admin";
-			String hash = passwordEncoder.encode(adminPassword);
-			System.out.println("===== ADMIN PASSWORD HASH =====");
-			System.out.println("Password: " + adminPassword);
-			System.out.println("Hash: " + hash);
-			System.out.println("================================");
-		};
-	}
+    @Bean
+    public CommandLineRunner seedDemoAdmin(UserService userService) {
+        return args -> {
+            userService.createAdminIfMissing("admin@gmail.com", "admin");
+            System.out.println("Demo admin account: admin@gmail.com / admin");
+        };
+    }
 }

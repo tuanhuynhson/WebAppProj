@@ -30,7 +30,10 @@ public class SecurityConfig {
                                 "/js/**",
                                 "/images/**",
                                 "/tickets",
+                                "/tickets/payment",
+                                "/tickets/checkout",
                                 "/merch",
+                                "/merch/payment",
                                 "/error"
                         ).permitAll()
                         .anyRequest().permitAll()

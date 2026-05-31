@@ -1,100 +1,85 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
+@import url("login.css");
+
+.register-page .login-form {
+    padding-top: 116px;
 }
 
-.auth-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+.register-page .login-home-link {
+    margin-bottom: 44px;
 }
 
-.auth-box h2 {
-    text-align: center;
-    color: #1a1a2e;
-    margin-bottom: 10px;
-    font-size: 28px;
+.register-page .login-form h1 {
+    margin-bottom: 34px;
+    font-size: clamp(76px, 7vw, 108px);
 }
 
-.auth-box p {
-    text-align: center;
-    color: #7a7a9d;
-    margin-bottom: 30px;
-    font-size: 15px;
+.register-page .login-form input {
+    height: 48px;
+    margin-bottom: 13px;
+    font-size: 27px;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.register-page .login-register {
+    margin-top: 26px;
+    font-size: 30px;
 }
 
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #1a1a2e;
+.register-page .login-form button {
+    top: 812px;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d1e0;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 14px;
-    transition: border-color 0.3s;
+@media (max-width: 760px) {
+    .register-page .login-form {
+        padding-top: 78px;
+    }
+
+    .register-page .login-form h1 {
+        margin-bottom: 22px;
+        font-size: 60px;
+    }
+
+    .register-page .login-form input {
+        height: 39px;
+        margin-bottom: 9px;
+        font-size: 22px;
+    }
+
+    .register-page .login-register {
+        margin-top: 18px;
+        font-size: 22px;
+    }
+
+    .register-page .login-form button {
+        top: 594px;
+    }
 }
 
-.form-group input:focus {
-    border-color: #e94560;
-    outline: none;
-}
+@media (max-width: 430px) {
+    .register-page .login-form {
+        padding-top: 58px;
+    }
 
-.btn-submit {
-    width: 100%;
-    padding: 14px;
-    background-color: #e94560;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    .register-page .login-home-link {
+        margin-bottom: 24px;
+    }
 
-.btn-submit:hover {
-    background-color: #d13d56;
-}
+    .register-page .login-form h1 {
+        margin-bottom: 17px;
+        font-size: 42px;
+    }
 
-.divider {
-    text-align: center;
-    margin: 25px 0;
-    color: #a0a0b8;
-    position: relative;
-    font-size: 0.9rem;
-}
+    .register-page .login-form input {
+        height: 32px;
+        margin-bottom: 7px;
+        font-size: 18px;
+    }
 
-.auth-box > p:last-child {
-    text-align: center;
-    margin-top: 25px;
-    font-size: 0.95rem;
-    color: #666;
-}
+    .register-page .login-register {
+        margin-top: 13px;
+        font-size: 16px;
+    }
 
-.auth-box > p:last-child a {
-    color: #e94560;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.auth-box > p:last-child a:hover {
-    text-decoration: underline;
+    .register-page .login-form button {
+        top: 430px;
+    }
 }

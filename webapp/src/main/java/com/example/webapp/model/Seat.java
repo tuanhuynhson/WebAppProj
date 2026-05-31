@@ -16,6 +16,9 @@ public class Seat {
     @Column(name = "section_id")
     private Long sectionId;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     @Column(name = "row_label")
     private String rowLabel;
 
@@ -37,6 +40,10 @@ public class Seat {
         return sectionId;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
     public String getRowLabel() {
         return rowLabel;
     }
@@ -49,14 +56,16 @@ public class Seat {
         return status;
     }
 
-    // SETTERS
-
     public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
 
     public void setSectionId(Long sectionId) {
         this.sectionId = sectionId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setRowLabel(String rowLabel) {
